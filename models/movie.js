@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Url = require('validator/lib/isURL');
-const { errorMessages } = require('../utils/const');
+const { errorMessages } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema(
   {

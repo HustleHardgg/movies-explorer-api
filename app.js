@@ -17,7 +17,7 @@ require('dotenv').config();
 
 const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
 
-const { errorMessages } = require('./utils/const');
+const { errorMessages } = require('./utils/constants');
 
 app.use(helmet());
 app.use(bodyParser.json());

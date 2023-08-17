@@ -2,7 +2,7 @@ const movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/forbiddenError');
 const ValidationError = require('../errors/validationError');
-const { errorMessages } = require('../utils/const');
+const { errorMessages } = require('../utils/constants');
 
 module.exports.getMovies = (res, next) => {
   movie.find({})
@@ -20,7 +20,6 @@ module.exports.createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    owner,
     movieId,
     nameRU,
     nameEN,
