@@ -31,6 +31,7 @@ mongoose.connect(DATABASE, {
   useNewUrlParser: true,
   autoIndex: true,
 });
+mongoose.set('strictQuery', true);
 
 app.use(requestLogger);
 
