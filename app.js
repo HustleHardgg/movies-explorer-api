@@ -31,7 +31,7 @@ mongoose.connect(BASE_PATH, {
   useNewUrlParser: true,
   autoIndex: true,
 });
-const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
+const mongoDB = 'mongodb://127.0.0.1:27017/';
 mongoose.set('strictQuery', false);
 mongoose.connect(mongoDB);
 
