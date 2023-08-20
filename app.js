@@ -24,7 +24,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
 app.use(cors);
 
 mongoose.connect(DATABASE, {
@@ -50,7 +49,6 @@ routes(app);
 app.use(errorHandler);
 app.use(errorLogger);
 app.use(errors());
-
 
 app.listen(PORT, () => {
   console.log(`Сервер слушает порт ${PORT}`);
