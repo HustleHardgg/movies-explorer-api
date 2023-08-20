@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-// eslint-disable-next-line import/no-unresolved
+
 const bcrypt = require('bcrypt');
+
 const AuthError = require('../errors/unauthorizedError');
 
 const userSchema = new mongoose.Schema({
