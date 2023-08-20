@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(cors);
 
-const mongoDB = 'mongodb://127.0.0.1:27017/';
+const mongoDB = 'mongodb://localhost:27017';
 mongoose.set('strictQuery', false);
 mongoose.connect(mongoDB);
 
