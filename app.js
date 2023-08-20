@@ -15,7 +15,7 @@ const errorHandler = require('./errors/errorHandler');
 
 require('dotenv').config();
 
-const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
+const { PORT = 3000, BASE_PATH = 'localhost' } = process.env;
 
 const { errorMessages } = require('./utils/constants');
 
@@ -26,12 +26,14 @@ app.use(cookieParser());
 
 app.use(cors);
 
-mongoose.connect(DATABASE, {
+mongoose.connect(BASE_PATH, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   autoIndex: true,
 });
-mongoose.set('strictQuery', true);
+const mongoDB = 'mongodb://127.0.0.1:27017/mestodb';
+mongoose.set('strictQuery', false);
+mongoose.connect(mongoDB);
 
 app.use(requestLogger);
 
