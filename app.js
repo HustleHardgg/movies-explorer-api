@@ -15,7 +15,7 @@ const errorHandler = require('./errors/errorHandler');
 
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
 
 const { errorMessages } = require('./utils/constants');
 
@@ -26,9 +26,11 @@ app.use(cookieParser());
 
 app.use(cors);
 
-const mongoDB = 'mongodb://localhost:27017';
-mongoose.set('strictQuery', false);
-mongoose.connect(mongoDB);
+mongoose.connect(DATABASE, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  autoIndex: true,
+});
 
 app.use(requestLogger);
 
