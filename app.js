@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,7 +16,7 @@ const errorHandler = require('./errors/errorHandler');
 
 require('dotenv').config();
 
-const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env;
+const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 const { errorMessages } = require('./utils/constants');
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 
 app.use(cors);
 
+mongoose.set('strictQuery', false);
 mongoose.connect(DATABASE, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -46,9 +48,10 @@ app.use('/', limiter);
 routes(app);
 
 // обработка ошибок
-app.use(errorHandler);
+
 app.use(errorLogger);
 app.use(errors());
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Сервер слушает порт ${PORT}`);

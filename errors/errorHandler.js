@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const errorHandler = (err, req, res, next) => {
   console.log(err);
   const statusCode = err.statusCode || 500;

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 const movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/forbiddenError');
@@ -39,6 +40,7 @@ module.exports.createMovie = (req, res, next) => {
     nameRU,
     nameEN,
   })
+
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
