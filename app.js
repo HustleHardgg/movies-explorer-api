@@ -16,7 +16,7 @@ const errorHandler = require('./errors/errorHandler');
 
 require('dotenv').config();
 
-const { PORT = 3000, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { PORT = 8080, DATABASE = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 const { errorMessages } = require('./utils/constants');
 

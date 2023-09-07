@@ -1,12 +1,12 @@
 /* eslint-disable no-shadow */
-const movie = require('../models/movie');
+const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/forbiddenError');
 const ValidationError = require('../errors/validationError');
 const { errorMessages } = require('../utils/constants');
 
 module.exports.getMovies = (res, next) => {
-  movie.find({})
+  Movie.find({})
     .then((movies) => res.send(movies))
     .catch(next);
 };
@@ -26,7 +26,7 @@ module.exports.createMovie = (req, res, next) => {
     nameEN,
   } = req.body;
   const owner = req.user._id;
-  movie.create({
+  Movie.create({
     country,
     director,
     duration,
@@ -52,7 +52,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  movie.findById(req.params._id)
+  Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) next(new NotFoundError(errorMessages.movieNotFound));
       if (req.user._id === movie.owner.toString()) {
