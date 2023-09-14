@@ -1,4 +1,3 @@
-/* eslint-disable func-names */
 const authorization = require('./authorization');
 const users = require('./users');
 const auth = require('../middlewares/auth');

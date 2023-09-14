@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/forbiddenError');
@@ -13,6 +12,7 @@ module.exports.getMovies = (res, next) => {
 
 module.exports.createMovie = (req, res, next) => {
   const {
+    movieId,
     country,
     director,
     duration,
@@ -21,22 +21,21 @@ module.exports.createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    movieId,
     nameRU,
     nameEN,
   } = req.body;
   const owner = req.user._id;
   Movie.create({
+    movieId,
     country,
     director,
     duration,
     year,
     description,
+    owner,
     image,
     trailerLink,
     thumbnail,
-    owner,
-    movieId,
     nameRU,
     nameEN,
   })
