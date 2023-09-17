@@ -1,10 +1,10 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
-const ForbiddenError = require('../errors/forbiddenError');
-const ValidationError = require('../errors/validationError');
+const ForbiddenError = require('../errors/ForbiddenError');
+const ValidationError = require('../errors/ValidationError');
 const { errorMessages } = require('../utils/constants');
 
-module.exports.getMovies = (res, next) => {
+module.exports.getMovies = (req, res, next) => {
   Movie.find({})
     .then((movies) => res.send(movies))
     .catch(next);
@@ -39,7 +39,6 @@ module.exports.createMovie = (req, res, next) => {
     nameRU,
     nameEN,
   })
-
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {

@@ -5,9 +5,9 @@ const {
 } = require('../middlewares/validation');
 
 const {
+  getMovies,
   createMovie,
   deleteMovie,
-  getMovies,
 } = require('../controllers/movies');
 
 router.get('/', getMovies);

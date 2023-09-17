@@ -1,20 +1,21 @@
 const allowedCors = [
   /(https|http)?:\/\/(?:www\.|(?!www))front-movies.nomoredomains.xyz\/[a-z]+\/|[a-z]+\/|[a-z]+(\/|)/,
 ];
+
 const errorMessages = {
-  auth: 'Нужна авторизация',
-  updateProfile: 'Email уже использован',
   image: 'Некорректный формат ссылки на картинку',
-  movieNotFound: 'Фильм не найден',
   trailerLink: 'Некорректный формат ссылки на трейлер',
-  userNotFound: 'Пользователь не найден',
   thumbnail: 'Некорректный формат ссылки на постер',
   createMovie: 'Некорректные данные при создании фильма',
+  movieNotFound: 'Фильм не найден',
   removeMovie: 'Попытка удалить фильм другого пользователя',
+  userNotFound: 'Пользователь не найден',
   createUser: 'Пользователь уже существует',
+  updateProfile: 'Email уже зарегистрирован',
   incorrectData: 'Неправильные почта или пароль',
-  incorrectEmail: 'Неправильный формат почты',
+  incorrectEmail: 'Некорректный формат почты',
   incorrectPath: 'Неправильный путь',
+  auth: 'Необходима авторизация',
   crash: 'Сервер сейчас упадёт',
 };
 

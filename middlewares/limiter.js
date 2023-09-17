@@ -5,7 +5,7 @@ module.exports = rateLimit({
   delayMs: 0,
   max: 100,
   message: JSON.stringify({
-    error: 'Было слишком много запросов',
+    error: 'Было слишком много запросов за 1 минуту',
     code: 429,
   }),
 });

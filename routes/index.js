@@ -1,8 +1,8 @@
-const authorization = require('./authorization');
 const users = require('./users');
+const movies = require('./movies');
+const authorization = require('./authorization');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/NotFoundError');
-const movies = require('./movies');
 const { errorMessages } = require('../utils/constants');
 
 module.exports = function (app) {

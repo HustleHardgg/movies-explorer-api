@@ -1,13 +1,26 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const NotFoundError = require('../errors/NotFoundError');
-const ConflictError = require('../errors/conflictError');
+const ConflictError = require('../errors/ConflictError');
 const { errorMessages } = require('../utils/constants');
-const User = require('../models/user');
 
 require('dotenv').config();
 
 const { JWT_SECRET = 'JWT_SECRET', NODE_ENV } = process.env;
+
+const User = require('../models/user');
+
+module.exports.getMe = (req, res, next) => {
+  const { _id } = req.user;
+  User.find({ _id })
+    .then((user) => {
+      if (!user) {
+        next(new NotFoundError(errorMessages.userNotFound));
+      }
+      return res.send(...user);
+    })
+    .catch(next);
+};
 
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -44,40 +57,6 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
-module.exports.getMe = (req, res, next) => {
-  const { _id } = req.user;
-  User.find({ _id })
-    .then((user) => {
-      if (!user) {
-        next(new NotFoundError(errorMessages.userNotFound));
-      }
-      return res.send(...user);
-    })
-    .catch(next);
-};
-
-module.exports.login = (req, res, next) => {
-  const { email, password } = req.body;
-  User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET',
-        {
-          expiresIn: '7d',
-        },
-      );
-      res.cookie('jwt', token, {
-        maxAge: 3600000,
-        httpOnly: true,
-        secure: true,
-        sameSite: 'None',
-      });
-      res.send({ token });
-    })
-    .catch(next);
-};
-
 module.exports.updateProfile = (req, res, next) => {
   const { name, email } = req.body;
 
@@ -103,6 +82,29 @@ module.exports.updateProfile = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET',
+        {
+          expiresIn: '7d',
+        },
+      );
+
+      res.cookie('jwt', token, {
+        maxAge: 3600000,
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+      });
+      res.send({ token });
+    })
+    .catch(next);
+};
+
 module.exports.logout = (req, res) => {
   res.cookie('jwt', '', {
     maxAge: 0,
@@ -111,5 +113,5 @@ module.exports.logout = (req, res) => {
     sameSite: 'None',
   });
   res.clearCookie('jwt');
-  return res.send({ message: 'Выход выполнен' });
+  return res.send({ message: 'logout - ok!' });
 };
