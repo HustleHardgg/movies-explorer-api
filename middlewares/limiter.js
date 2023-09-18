@@ -1,11 +1,8 @@
 const rateLimit = require('express-rate-limit');
 
-module.exports = rateLimit({
-  windowMs: 60 * 1000,
-  delayMs: 0,
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
   max: 100,
-  message: JSON.stringify({
-    error: 'Было слишком много запросов за 1 минуту',
-    code: 429,
-  }),
 });
+
+module.exports = limiter;

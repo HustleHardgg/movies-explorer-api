@@ -1,54 +1,48 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const isEmail = require('validator/lib/isEmail');
-const UnauthorizedError = require('../errors/UnauthorizedError');
-const { errorMessages } = require('../utils/constants');
+const AuthError = require('../errors/AuthError');
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      minLength: 2,
-      maxLength: 30,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-      dropDups: true,
-      validate: {
-        validator: (link) => isEmail(link),
-        message: errorMessages.incorrectEmail,
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Обязательно заполните это поле'],
+    minlength: 2,
+    maxlength: 30,
+  },
+  email: {
+    type: String,
+    required: [true, 'Обязательно заполните это поле'],
+    unique: true,
+    validate: {
+      validator(email) {
+        return validator.isEmail(email);
       },
-    },
-    password: {
-      type: String,
-      required: true,
-      select: false,
+      message: 'Такой email не подходит',
     },
   },
-  { versionKey: false },
-);
+  password: {
+    type: String,
+    required: [true, 'Обязательно заполните это поле'],
+    select: false,
+  },
+});
 
-userSchema.statics.findUserByCredentials = function (email, password) {
-  return this.findOne({ email }, { runValidators: true })
-    .select('+password')
+userSchema.statics.findUserByCredentials = function findUserByCredentials(email, password) {
+  return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(
-          new UnauthorizedError(errorMessages.incorrectData),
-        );
+        throw new AuthError('Неправильные почта или пароль');
       }
-      return bcrypt.compare(password, user.password).then((matched) => {
-        if (!matched) {
-          return Promise.reject(
-            new UnauthorizedError(errorMessages.incorrectData),
-          );
-        }
-        return user;
-      });
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new AuthError('Неправильные почта или пароль');
+          }
+
+          return user;
+        });
     });
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('user', userSchema);

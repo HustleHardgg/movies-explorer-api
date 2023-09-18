@@ -1,19 +1,13 @@
-const users = require('./users');
-const movies = require('./movies');
-const authorization = require('./authorization');
+const router = require('express').Router();
+const { login, createUser } = require('../controllers/users');
+const { validatorLogin, validatorUser } = require('../validate/validate');
 const auth = require('../middlewares/auth');
-const NotFoundError = require('../errors/NotFoundError');
-const { errorMessages } = require('../utils/constants');
 
-module.exports = function (app) {
-  app.use('/', authorization);
+router.post('/signin', validatorLogin, login);
+router.post('/signup', validatorUser, createUser);
 
-  app.use(auth);
+router.use(auth, require('./users'));
+router.use(auth, require('./movies'));
+router.use(auth, require('./errRouter'));
 
-  app.use('/users', users);
-  app.use('/movies', movies);
-
-  app.all('*', (req, res, next) => {
-    next(new NotFoundError(errorMessages.incorrectPath));
-  });
-};
+module.exports = router;
