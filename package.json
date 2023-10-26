@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/altwebga/movies-explorer-api.git"
+    "url": ""
   },
   "keywords": [],
-  "author": "Konstantin Kuznecov",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/altwebga/movies-explorer-api/issues"
