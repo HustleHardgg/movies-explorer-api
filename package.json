@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/altwebga/movies-explorer-api/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/altwebga/movies-explorer-api#readme",
+  "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
